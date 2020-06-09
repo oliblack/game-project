@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/tile.js"></script>
     <script src="./js/main.js"></script>
     <link rel="stylesheet" href="main.css">
     <title>Oli's Game</title>
@@ -12,7 +13,6 @@
     <main>
         <div class="conatiner">
             <div class="main-game-container">
-
                 <!-- this is the main game grid -->
                 <div class="grid-container">
                     <div class="grid-row">
@@ -40,7 +40,6 @@
                     <div class="grid-cell"></div>
                     </div>
                 </div>
-
                 <!-- this is the grid for holding tiles, will be replicated in JS and inserted in tile-container -->
                 <div class="tile-container">
                     <div class="tile tile-2 tile-position-1-1 tile-new">
@@ -91,7 +90,10 @@
                     <div class="tile tile-2 tile-position-4-4 tile-new">
                         <div class="tile-inner">16</div>
                     </div>
-            </div>
+            </div>      
+        </div>
+        <div class="below-game-section">
+            <p>Press arrows to move squares</p>
         </div>
     </main>
 </body>

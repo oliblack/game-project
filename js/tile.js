@@ -1,7 +1,5 @@
 
-
-
-class Tile {
+export class Tile {
     constructor(currentValue, xCoord, yCoord, isEmpty) {
         this.currentValue = currentValue;
         this.xCoord = xCoord;

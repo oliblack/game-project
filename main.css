@@ -193,4 +193,9 @@ body {
   -webkit-transform: translate(363px, 363px);
           transform: translate(363px, 363px);
 }
+
+.below-game-section {
+  text-align: center;
+  padding: 50px;
+}
 /*# sourceMappingURL=main.css.map */
