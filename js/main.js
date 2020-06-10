@@ -157,12 +157,11 @@ function checkBoard(){
             if(tile[j] == undefined) freeSpaces.push(getIntFromXandYCoord(i,j));
         }
     }
-    console.log(freeSpaces);
     if (freeSpaces.length == 0){
         checkIfGameOver();
     }else{
-        let randomNum1 = freeSpaces[randomNumberGenerator(0,freeSpaces.length)];
-        let randomCoords1 = getXandYCoordFromInt(randomNum1);     
+        let randomNum1 = freeSpaces[randomNumberGenerator(0,freeSpaces.length-1)];
+        let randomCoords1 = getXandYCoordFromInt(randomNum1);    
         createNewTile(2, randomCoords1[0], randomCoords1[1], false);
         renderGrid();
     }
