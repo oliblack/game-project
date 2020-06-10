@@ -82,6 +82,10 @@ body {
   line-height: 107px;
 }
 
+.tile.tile-2 .tile-inner {
+  background-color: burlywood;
+}
+
 .tile.tile-128 .tile-inner {
   font-size: 45px;
 }
