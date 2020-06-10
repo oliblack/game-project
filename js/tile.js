@@ -11,13 +11,6 @@ export class Tile {
           return this.currentPosition;
       }
 
-      get currentValue(){
-          return this.currentValue;
-      }
-
-      get isEmpty(){
-        return this.isEmpty;
-    }
 
       currentPosition() {
         return [this.xCoord, this.yCoord];
@@ -33,7 +26,7 @@ export class Tile {
       }
 
       get HTML(){
-          return `<div class="tile tile-${this.currentValue} tile-position-${this.xCoord}-${this.yCoord} tile-new"><div class="tile-inner">${this.currentValue}</div></div>`;
+          return `<div class="tile tile-${this.currentValue} tile-position-${this.xCoord}-${this.yCoord}"><div class="tile-inner">${this.currentValue}</div></div>`;
       }
 }
 
