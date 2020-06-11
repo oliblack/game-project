@@ -2,6 +2,7 @@ import { Tile } from "./tile.js";
 
 let tileArray = [[],[],[],[]];
 const tileContainer = document.getElementById("tile-container");
+
 document.querySelector(".reset-button").addEventListener("click", resetTileGrid)
 let gameOver = false;
 
@@ -60,6 +61,10 @@ function removeTileFromGrid(tile){
 
 function resetTileGrid(){
     gameOver = false;
+    let mainGameContainer = document.getElementById("main-game-container");
+    mainGameContainer.style.opacity = 1;
+    let gameOverText = document.getElementById("game-over-text");
+    gameOverText.style.display = "none";
     tileArray = [[],[],[],[]];
     createStarterTiles();
 }
@@ -291,7 +296,11 @@ document.addEventListener("keydown", function(event) {
  }
 
  function gameOverFunction(){
-
+    let mainGameContainer = document.getElementById("main-game-container");
+    mainGameContainer.style.opacity = 0.4;
+    let gameOverText = document.getElementById("game-over-text");
+    gameOverText.style.display = "flex";
+    
  }
 
 
