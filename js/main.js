@@ -131,8 +131,7 @@ function redoTileCoordinates(){
         var tile = tileArray[i];
         for(var j = 0; j < 4; j++) {
             if(tile[j] != undefined){
-                tile[j].xCoord=i;
-                tile[j].yCoord=j;
+                tile[j].changePosition(i,j);
             } 
         }
     }
@@ -161,8 +160,13 @@ function checkBoard(){
         checkIfGameOver();
     }else{
         let randomNum1 = freeSpaces[randomNumberGenerator(0,freeSpaces.length-1)];
-        let randomCoords1 = getXandYCoordFromInt(randomNum1);    
-        createNewTile(2, randomCoords1[0], randomCoords1[1], false);
+        let randomCoords1 = getXandYCoordFromInt(randomNum1);   
+
+        //20% chance for number to be a 4
+        let tileValue = 2; 
+        if (randomNumberGenerator(0,10) > 8) tileValue = 4; 
+
+        createNewTile(tileValue, randomCoords1[0], randomCoords1[1], false);
         renderGrid();
     }
 }

@@ -83,26 +83,51 @@ body {
 }
 
 .tile.tile-2 .tile-inner {
-  background-color: burlywood;
+  background-color: #B0E2FF;
+}
+
+.tile.tile-4 .tile-inner {
+  background-color: #87CEFA;
+}
+
+.tile.tile-8 .tile-inner {
+  background-color: #6CA6CD;
+}
+
+.tile.tile-16 .tile-inner {
+  background-color: #5D7B93;
+}
+
+.tile.tile-32 .tile-inner {
+  background-color: #4682B4;
+}
+
+.tile.tile-64 .tile-inner {
+  background-color: #36648B;
 }
 
 .tile.tile-128 .tile-inner {
+  background-color: #1874CD;
   font-size: 45px;
 }
 
 .tile.tile-256 .tile-inner {
+  background-color: #007FFF;
   font-size: 45px;
 }
 
 .tile.tile-512 .tile-inner {
+  background-color: #0147FA;
   font-size: 45px;
 }
 
 .tile.tile-1024 .tile-inner {
+  background-color: #003F87;
   font-size: 35px;
 }
 
 .tile.tile-2048 .tile-inner {
+  background-color: #0000FF;
   font-size: 35px;
 }
 

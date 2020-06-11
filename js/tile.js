@@ -11,7 +11,6 @@ export class Tile {
           return this.currentPosition;
       }
 
-
       currentPosition() {
         return [this.xCoord, this.yCoord];
       }
@@ -21,23 +20,7 @@ export class Tile {
           this.yCoord = newYCoord;
       }
 
-      mergeTile(otherTileXCoord, otherTileYCoord, otherTileValue){
-
-      }
-
       get HTML(){
           return `<div class="tile tile-${this.currentValue} tile-position-${this.xCoord}-${this.yCoord}"><div class="tile-inner">${this.currentValue}</div></div>`;
       }
 }
-
-function createStarterTile(){
-    //find grid array and find 2 random empty tiles
-    //create tile with those positions and value of 2
-
-
-}
-
-
-    // - Function - mergeTile (updates score as well)
-    // - Function - changeValue - this changes number/color/fontsize
-    // - Funciton - deleteTile
