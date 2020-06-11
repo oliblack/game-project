@@ -19,8 +19,13 @@ body {
     margin: 0 auto; 
 }
 
+.header-div{
+    margin-top: 20px;
+    text-align: center;
+}
+
 .main-game-container {
-    margin-top: 100px;
+    margin-top: 20px;
     position: relative;
     padding: 15px;
     border-radius: 15px;
@@ -226,7 +231,8 @@ body {
     transition: all .3s;
     position: relative;
     overflow: hidden;
-    z-index: 1;
+    border: none;
+    z-index: 1000;
 
     &:after {
         content: '';
@@ -272,7 +278,7 @@ body {
     left:0;
     width:100%;
     height:60%;
-    z-index:1000;
+    z-index:999;
 
     h1 {
         font-weight: bolder;
