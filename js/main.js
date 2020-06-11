@@ -190,27 +190,53 @@ document.addEventListener("keydown", function(event) {
         array2=[tileArray[0][1], tileArray[1][1], tileArray[2][1], tileArray[3][1]];
         array3=[tileArray[0][2], tileArray[1][2], tileArray[2][2], tileArray[3][2]];
         array4=[tileArray[0][3], tileArray[1][3], tileArray[2][3], tileArray[3][3]];
-        moveTilesInGrid(array1, array2, array3, array4, "up");
+        if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "up");
      } else if (event.code == "ArrowDown") {
         array1=[tileArray[3][0], tileArray[2][0], tileArray[1][0], tileArray[0][0]];
         array2=[tileArray[3][1], tileArray[2][1], tileArray[1][1], tileArray[0][1]];
         array3=[tileArray[3][2], tileArray[2][2], tileArray[1][2], tileArray[0][2]];
         array4=[tileArray[3][3], tileArray[2][3], tileArray[1][3], tileArray[0][3]];
-        moveTilesInGrid(array1, array2, array3, array4, "down");
+        if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "down");
     } else if (event.code == "ArrowRight") {
         array1=[tileArray[0][3], tileArray[0][2], tileArray[0][1], tileArray[0][0]];
         array2=[tileArray[1][3], tileArray[1][2], tileArray[1][1], tileArray[1][0]];
         array3=[tileArray[2][3], tileArray[2][2], tileArray[2][1], tileArray[2][0]];
         array4=[tileArray[3][3], tileArray[3][2], tileArray[3][1], tileArray[3][0]];
-        moveTilesInGrid(array1, array2, array3, array4, "right");
+        if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "right");
     } else if (event.code == "ArrowLeft") {
         array1=[tileArray[0][0], tileArray[0][1], tileArray[0][2], tileArray[0][3]];
         array2=[tileArray[1][0], tileArray[1][1], tileArray[1][2], tileArray[1][3]];
         array3=[tileArray[2][0], tileArray[2][1], tileArray[2][2], tileArray[2][3]];
         array4=[tileArray[3][0], tileArray[3][1], tileArray[3][2], tileArray[3][3]];
-        moveTilesInGrid(array1, array2, array3, array4, "left");
+        if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "left");
     }
  });
+
+ function validMove(array1, array2, array3, array4) {
+
+    let array1Valid = checkArrayValid(array1);
+    let array2Valid = checkArrayValid(array2);
+    let array3Valid = checkArrayValid(array3);
+    let array4Valid = checkArrayValid(array4);
+
+    if(array1Valid || array2Valid || array3Valid || array4Valid){
+        return true;
+    }
+    return false;
+ }
+
+ function checkArrayValid(array){
+    for (let index = 0; index < array.length-1; index++) {
+        const element = array[index];
+        const nextElement = array[index+1];
+        if (element == undefined && nextElement != undefined) return true;
+        if (element != undefined && nextElement != undefined){
+            if (element.currentValue == nextElement.currentValue) return true;
+        }       
+    }
+    return false
+ }
+
 
 
 
