@@ -3,6 +3,7 @@ import { Tile } from "./tile.js";
 let tileArray = [[],[],[],[]];
 const tileContainer = document.getElementById("tile-container");
 document.querySelector(".reset-button").addEventListener("click", resetTileGrid)
+let gameOver = false;
 
 initialisation();
 
@@ -58,6 +59,7 @@ function removeTileFromGrid(tile){
 }
 
 function resetTileGrid(){
+    gameOver = false;
     tileArray = [[],[],[],[]];
     createStarterTiles();
 }
@@ -67,21 +69,19 @@ function moveTilesInGrid(array1, array2, array3, array4, direction){
     let sortedArray2 = [...array2].sort();
     let sortedArray3 = [...array3].sort();
     let sortedArray4 = [...array4].sort();
+    let gridArray1 = [];
+    let gridArray2 = [];
+    let gridArray3 = [];
+    let gridArray4 = [];
 
     sortedArray1 = mergeTiles(sortedArray1);
     sortedArray2 = mergeTiles(sortedArray2);
     sortedArray3 = mergeTiles(sortedArray3);
     sortedArray4 = mergeTiles(sortedArray4);
-
     sortedArray1 = sortedArray1.sort();
     sortedArray2 = sortedArray2.sort();
     sortedArray3 = sortedArray3.sort();
     sortedArray4 = sortedArray4.sort();
-
-    let gridArray1 = [];
-    let gridArray2 = [];
-    let gridArray3 = [];
-    let gridArray4 = [];
 
     if (direction == "up") {
         gridArray1 = [sortedArray1[0],sortedArray2[0],sortedArray3[0],sortedArray4[0]];
@@ -156,18 +156,18 @@ function checkBoard(){
             if(tile[j] == undefined) freeSpaces.push(getIntFromXandYCoord(i,j));
         }
     }
-    if (freeSpaces.length == 0){
-        checkIfGameOver();
-    }else{
-        let randomNum1 = freeSpaces[randomNumberGenerator(0,freeSpaces.length-1)];
-        let randomCoords1 = getXandYCoordFromInt(randomNum1);   
+    let randomNum1 = freeSpaces[randomNumberGenerator(0,freeSpaces.length-1)];
+    let randomCoords1 = getXandYCoordFromInt(randomNum1);   
 
-        //20% chance for number to be a 4
-        let tileValue = 2; 
-        if (randomNumberGenerator(0,10) > 8) tileValue = 4; 
+    //20% chance for number to be a 4
+    let tileValue = 2; 
+    if (randomNumberGenerator(0,10) > 8) tileValue = 4; 
 
-        createNewTile(tileValue, randomCoords1[0], randomCoords1[1], false);
-        renderGrid();
+    createNewTile(tileValue, randomCoords1[0], randomCoords1[1], false);
+    renderGrid();
+    if(checkIfGameOver()){
+        gameOver = true;
+        gameOverFunction();
     }
 }
 
@@ -175,40 +175,93 @@ function checkBoard(){
 //add check to see if game over if no spaces on board or if there are still moves left
 function checkIfGameOver(){
 
-}
-
-//event listeners for arrow keys pressed
-document.addEventListener("keydown", function(event) {
-
     let array1 = [];
     let array2 = [];
     let array3 = [];
     let array4 = [];
+    let array1Full = false;
+    let array2Full = false;
+    let array3Full = false;
+    let array4Full = false;
 
-    if (event.code == "ArrowUp") {
-        array1=[tileArray[0][0], tileArray[1][0], tileArray[2][0], tileArray[3][0]];
-        array2=[tileArray[0][1], tileArray[1][1], tileArray[2][1], tileArray[3][1]];
-        array3=[tileArray[0][2], tileArray[1][2], tileArray[2][2], tileArray[3][2]];
-        array4=[tileArray[0][3], tileArray[1][3], tileArray[2][3], tileArray[3][3]];
-        if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "up");
-     } else if (event.code == "ArrowDown") {
-        array1=[tileArray[3][0], tileArray[2][0], tileArray[1][0], tileArray[0][0]];
-        array2=[tileArray[3][1], tileArray[2][1], tileArray[1][1], tileArray[0][1]];
-        array3=[tileArray[3][2], tileArray[2][2], tileArray[1][2], tileArray[0][2]];
-        array4=[tileArray[3][3], tileArray[2][3], tileArray[1][3], tileArray[0][3]];
-        if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "down");
-    } else if (event.code == "ArrowRight") {
-        array1=[tileArray[0][3], tileArray[0][2], tileArray[0][1], tileArray[0][0]];
-        array2=[tileArray[1][3], tileArray[1][2], tileArray[1][1], tileArray[1][0]];
-        array3=[tileArray[2][3], tileArray[2][2], tileArray[2][1], tileArray[2][0]];
-        array4=[tileArray[3][3], tileArray[3][2], tileArray[3][1], tileArray[3][0]];
-        if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "right");
-    } else if (event.code == "ArrowLeft") {
-        array1=[tileArray[0][0], tileArray[0][1], tileArray[0][2], tileArray[0][3]];
-        array2=[tileArray[1][0], tileArray[1][1], tileArray[1][2], tileArray[1][3]];
-        array3=[tileArray[2][0], tileArray[2][1], tileArray[2][2], tileArray[2][3]];
-        array4=[tileArray[3][0], tileArray[3][1], tileArray[3][2], tileArray[3][3]];
-        if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "left");
+    array1=[tileArray[0][0], tileArray[1][0], tileArray[2][0], tileArray[3][0]];
+    array2=[tileArray[0][1], tileArray[1][1], tileArray[2][1], tileArray[3][1]];
+    array3=[tileArray[0][2], tileArray[1][2], tileArray[2][2], tileArray[3][2]];
+    array4=[tileArray[0][3], tileArray[1][3], tileArray[2][3], tileArray[3][3]];
+    if(checkArrayFullWithNoMoves(array1) && checkArrayFullWithNoMoves(array2) && checkArrayFullWithNoMoves(array3) && checkArrayFullWithNoMoves(array4)) array1Full = true;
+
+    array1=[tileArray[3][0], tileArray[2][0], tileArray[1][0], tileArray[0][0]];
+    array2=[tileArray[3][1], tileArray[2][1], tileArray[1][1], tileArray[0][1]];
+    array3=[tileArray[3][2], tileArray[2][2], tileArray[1][2], tileArray[0][2]];
+    array4=[tileArray[3][3], tileArray[2][3], tileArray[1][3], tileArray[0][3]];
+    if(checkArrayFullWithNoMoves(array1) && checkArrayFullWithNoMoves(array2) && checkArrayFullWithNoMoves(array3) && checkArrayFullWithNoMoves(array4)) array2Full = true;
+
+    array1=[tileArray[0][3], tileArray[0][2], tileArray[0][1], tileArray[0][0]];
+    array2=[tileArray[1][3], tileArray[1][2], tileArray[1][1], tileArray[1][0]];
+    array3=[tileArray[2][3], tileArray[2][2], tileArray[2][1], tileArray[2][0]];
+    array4=[tileArray[3][3], tileArray[3][2], tileArray[3][1], tileArray[3][0]];
+    if(checkArrayFullWithNoMoves(array1) && checkArrayFullWithNoMoves(array2) && checkArrayFullWithNoMoves(array3) && checkArrayFullWithNoMoves(array4)) array3Full = true;
+
+    array1=[tileArray[0][0], tileArray[0][1], tileArray[0][2], tileArray[0][3]];
+    array2=[tileArray[1][0], tileArray[1][1], tileArray[1][2], tileArray[1][3]];
+    array3=[tileArray[2][0], tileArray[2][1], tileArray[2][2], tileArray[2][3]];
+    array4=[tileArray[3][0], tileArray[3][1], tileArray[3][2], tileArray[3][3]];
+    if(checkArrayFullWithNoMoves(array1) && checkArrayFullWithNoMoves(array2) && checkArrayFullWithNoMoves(array3) && checkArrayFullWithNoMoves(array4)) array4Full = true;
+
+    if(array1Full && array2Full && array3Full && array4Full){
+        return true;        
+    }else {
+        return false;
+    }
+}
+
+function checkArrayFullWithNoMoves(array){
+    for (let index = 0; index < array.length-1; index++) {
+        const element = array[index];
+        const nextElement = array[index+1];
+        if(element == undefined) return false;
+        if (element != undefined && nextElement != undefined){
+            if (element.currentValue == nextElement.currentValue) return false;
+        }   
+    }
+    return true;
+ }
+
+//event listeners for arrow keys pressed
+document.addEventListener("keydown", function(event) {
+
+    if(gameOver==false){
+        console.log("move allowed");
+        let array1 = [];
+        let array2 = [];
+        let array3 = [];
+        let array4 = [];
+
+        if (event.code == "ArrowUp") {
+            array1=[tileArray[0][0], tileArray[1][0], tileArray[2][0], tileArray[3][0]];
+            array2=[tileArray[0][1], tileArray[1][1], tileArray[2][1], tileArray[3][1]];
+            array3=[tileArray[0][2], tileArray[1][2], tileArray[2][2], tileArray[3][2]];
+            array4=[tileArray[0][3], tileArray[1][3], tileArray[2][3], tileArray[3][3]];
+            if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "up");
+        } else if (event.code == "ArrowDown") {
+            array1=[tileArray[3][0], tileArray[2][0], tileArray[1][0], tileArray[0][0]];
+            array2=[tileArray[3][1], tileArray[2][1], tileArray[1][1], tileArray[0][1]];
+            array3=[tileArray[3][2], tileArray[2][2], tileArray[1][2], tileArray[0][2]];
+            array4=[tileArray[3][3], tileArray[2][3], tileArray[1][3], tileArray[0][3]];
+            if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "down");
+        } else if (event.code == "ArrowRight") {
+            array1=[tileArray[0][3], tileArray[0][2], tileArray[0][1], tileArray[0][0]];
+            array2=[tileArray[1][3], tileArray[1][2], tileArray[1][1], tileArray[1][0]];
+            array3=[tileArray[2][3], tileArray[2][2], tileArray[2][1], tileArray[2][0]];
+            array4=[tileArray[3][3], tileArray[3][2], tileArray[3][1], tileArray[3][0]];
+            if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "right");
+        } else if (event.code == "ArrowLeft") {
+            array1=[tileArray[0][0], tileArray[0][1], tileArray[0][2], tileArray[0][3]];
+            array2=[tileArray[1][0], tileArray[1][1], tileArray[1][2], tileArray[1][3]];
+            array3=[tileArray[2][0], tileArray[2][1], tileArray[2][2], tileArray[2][3]];
+            array4=[tileArray[3][0], tileArray[3][1], tileArray[3][2], tileArray[3][3]];
+            if(validMove(array1, array2, array3, array4)) moveTilesInGrid(array1, array2, array3, array4, "left");
+        }
     }
  });
 
@@ -235,6 +288,10 @@ document.addEventListener("keydown", function(event) {
         }       
     }
     return false
+ }
+
+ function gameOverFunction(){
+
  }
 
 
